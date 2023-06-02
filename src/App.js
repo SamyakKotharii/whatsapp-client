@@ -1,11 +1,10 @@
 import React from "react";
-import ChatComponent from "./components/ChatComponent";
+import Home from "./pages/Home";
 
 const App = () => {
   return (
     <div className="app">
-      <h1>WhatsApp Chat</h1>
-      <ChatComponent />
+      <Home />
     </div>
   );
 };

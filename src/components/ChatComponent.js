@@ -1,34 +1,74 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ChatConversation from "./ChatConversation";
+import "../index.css";
 
-const ChatComponent = () => {
-  const [chat, setChat] = useState([]);
+const ChatComponent = ({ selectedNumber }) => {
+  const [body, setBody] = useState("");
+  const [messages, setMessages] = useState([]);
 
-  const fetchData = async () => {
+  const fetchMessages = async () => {
     try {
-      const response = await axios.post(
-        "https://darkhorsestockscloud.onrender.com/webhook"
+      const response = await axios.get(
+        `https://darkhorsestockscloud.onrender.com/messages/${selectedNumber}`
       );
-      setChat(response.data.entry[0].changes[0].value.messages);
+      console.log("Response", response.data);
+
+      // Update messages with the response data for the selected number
+      setMessages(response.data);
     } catch (error) {
-      console.log(error);
+      console.error("An error occurred:", error);
     }
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    // Fetch messages from the API when the component mounts or when selectedNumber changes
+    fetchMessages();
+  }, [selectedNumber]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Send a POST request to the API endpoint
+      await axios.post(
+        "https://darkhorsestockscloud.onrender.com/send-message",
+        {
+          to: selectedNumber,
+          text: {
+            preview_url: false,
+            body: body,
+          },
+        }
+      );
+
+      // Clear the form after successful submission
+      setBody("");
+
+      // Fetch updated messages after sending a new message
+      fetchMessages();
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
 
   return (
-    <div>
-      <h1>Received Messages:</h1>
-      {chat.map((message, index) => (
-        <div key={index}>
-          <p>From: {message.from}</p>
-          <p>Message: {message.text.body}</p>
-          <hr />
-        </div>
-      ))}
+    <div className="chat-component">
+      <div className="message-container">
+        {selectedNumber && (
+          <div className="selected-number">{selectedNumber}</div>
+        )}
+        <ChatConversation messages={messages} />
+      </div>
+      <form onSubmit={handleSubmit} className="message-input">
+        <input
+          type="text"
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+          placeholder="Type a message..."
+        />
+        <button type="submit">Send</button>
+      </form>
     </div>
   );
 };
