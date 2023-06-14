@@ -24,7 +24,7 @@ const ChatComponent = ({ selectedNumber }) => {
 
   useEffect(() => {
     fetchMessages();
-  }, [selectedNumber]);
+  }, [selectedNumber, fetchMessages]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
