@@ -24,7 +24,6 @@ const ChatComponent = ({ selectedNumber }) => {
 
   useEffect(() => {
     fetchMessages();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedNumber]);
 
   const handleSubmit = async (e) => {
