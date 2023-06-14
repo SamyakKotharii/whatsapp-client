@@ -5,7 +5,6 @@ const ChatConversation = ({ messages }) => {
   const chatConversationRef = useRef(null);
 
   useEffect(() => {
-    // Scroll to the bottom of the chat conversation when messages are updated
     scrollToBottom();
   }, [messages]);
 
@@ -14,10 +13,6 @@ const ChatConversation = ({ messages }) => {
       chatConversationRef.current.scrollTop =
         chatConversationRef.current.scrollHeight;
     }
-  };
-
-  const handleScrollToBottom = () => {
-    scrollToBottom();
   };
 
   return (

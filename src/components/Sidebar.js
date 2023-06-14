@@ -47,9 +47,17 @@ const Sidebar = ({ onSelectNumber }) => {
     onSelectNumber(number);
   };
 
+  // const handleSearch = (e) => {
+  //   e.preventDefault();
+  //   setSearchTerm(e.target.value);
+  // };
   const handleSearch = (e) => {
-    e.preventDefault();
-    setSearchTerm(e.target.value);
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+
+    if (searchTerm === "") {
+      setSearchResults([]);
+    }
   };
 
   return (

@@ -6,6 +6,7 @@ import "../index.css";
 const ChatComponent = ({ selectedNumber }) => {
   const [body, setBody] = useState("");
   const [messages, setMessages] = useState([]);
+  const [error, setError] = useState(null);
 
   const fetchMessages = async () => {
     try {
@@ -13,24 +14,21 @@ const ChatComponent = ({ selectedNumber }) => {
         `https://darkhorsestockscloud.onrender.com/messages/${selectedNumber}`
       );
       console.log("Response", response.data);
-
-      // Update messages with the response data for the selected number
       setMessages(response.data);
+      setError(null); // Clear any previous error
     } catch (error) {
       console.error("An error occurred:", error);
+      setError("Failed to fetch messages. Please try again."); // Set error message
     }
   };
 
   useEffect(() => {
-    // Fetch messages from the API when the component mounts or when selectedNumber changes
     fetchMessages();
   }, [selectedNumber]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      // Send a POST request to the API endpoint
       await axios.post(
         "https://darkhorsestockscloud.onrender.com/send-message",
         {
@@ -41,14 +39,12 @@ const ChatComponent = ({ selectedNumber }) => {
           },
         }
       );
-
-      // Clear the form after successful submission
       setBody("");
-
-      // Fetch updated messages after sending a new message
       fetchMessages();
+      setError(null); // Clear any previous error
     } catch (error) {
       console.error("An error occurred:", error);
+      setError("Failed to send message. Please try again."); // Set error message
     }
   };
 
@@ -58,6 +54,8 @@ const ChatComponent = ({ selectedNumber }) => {
         {selectedNumber && (
           <div className="selected-number">{selectedNumber}</div>
         )}
+        {error && <div className="error">{error}</div>}{" "}
+        {/* Display error message */}
         <ChatConversation messages={messages} />
       </div>
       <form onSubmit={handleSubmit} className="message-input">
