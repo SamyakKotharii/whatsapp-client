@@ -130,6 +130,12 @@ code {
 }
 
 .message-left-text {
+  display: inline-block;
+  max-width: 80%;
+}
+
+.message-right-text {
+  
   background-color: #dcf8c6;
   padding: 10px;
   border-radius: 8px;
@@ -137,11 +143,6 @@ code {
   max-width: 70%;
   align-self: flex-start;
   margin-right: auto;
-}
-
-.message-right-text {
-  display: inline-block;
-  max-width: 80%;
 }
 
 .timestamp {
