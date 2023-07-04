@@ -52,7 +52,9 @@ const ChatComponent = ({ selectedNumber }) => {
     <div className="chat-component">
       <div className="message-container">
         {selectedNumber && (
-          <div className="selected-number">{selectedNumber}</div>
+          <div className="selected-number">
+            {selectedNumber} - {messages.profile}
+          </div>
         )}
         {error && <div className="error">{error}</div>}
         <ChatConversation messages={messages} />
