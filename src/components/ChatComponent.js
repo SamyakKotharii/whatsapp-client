@@ -53,10 +53,11 @@ const ChatComponent = ({ selectedNumber }) => {
       <div className="message-container">
         {selectedNumber && (
           <div className="selected-number">
-            {selectedNumber} -{" "}
-            {messages.map((message) => {
-              message.profile;
-            })}
+            {messages.map((message) => (
+              <p>
+                {selectedNumber} - {message.profile}
+              </p>
+            ))}
           </div>
         )}
         {error && <div className="error">{error}</div>}
