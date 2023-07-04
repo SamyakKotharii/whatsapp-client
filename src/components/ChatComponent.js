@@ -54,9 +54,9 @@ const ChatComponent = ({ selectedNumber }) => {
         {selectedNumber && (
           <div className="selected-number">
             {selectedNumber} -{" "}
-            {messages.map((message) => (
-              <p>{message.profile}</p>
-            ))}
+            {messages.map((message) => {
+              message.profile;
+            })}
           </div>
         )}
         {error && <div className="error">{error}</div>}
